@@ -14,4 +14,3 @@ export const theme = createTheme({
     },
   },
 });
-// #4361ee
