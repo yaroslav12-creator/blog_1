@@ -1,15 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
 
+import { selectIsAuth } from '../../redux/slices/auth';
+
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 
 export const AddPost = () => {
+  const isAuth = useSelector(selectIsAuth);
   const imageUrl = '';
   const [value, setValue] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [tags, setTags] = React.useState('');
+  
 
   const handleChangeFile = () => {};
 
@@ -34,15 +42,19 @@ export const AddPost = () => {
     [],
   );
 
+  if(!window.localStorage.getItem('token') && !isAuth) {
+    return <Navigate to="/"/>
+  }
+
   return (
     <Paper style={{ padding: 30 }}>
       <Button variant="outlined" size="large">
-        Загрузить превью
+        Preview
       </Button>
       <input type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-          Удалить
+          Delete
         </Button>
       )}
       {imageUrl && (
@@ -53,17 +65,26 @@ export const AddPost = () => {
       <TextField
         classes={{ root: styles.title }}
         variant="standard"
-        placeholder="Заголовок статьи..."
+        placeholder="Post title..."
+        value={title}
+        onChange={e => setTitle(e.target.value)}
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
+      <TextField 
+        classes={{ root: styles.tags }} 
+        variant="standard" 
+        placeholder="Tags" 
+        value={tags}
+        onChange={e => setTags(e.target.value)}
+        fullWidth 
+      />
       <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">
-          Опубликовать
+          Publish
         </Button>
         <a href="/">
-          <Button size="large">Отмена</Button>
+          <Button size="large">Cancel</Button>
         </a>
       </div>
     </Paper>
