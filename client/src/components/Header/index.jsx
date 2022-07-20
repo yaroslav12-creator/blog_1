@@ -12,9 +12,10 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const onClickLogout = () => {
-    if(window.confirm('Are you sure you wand to logout?'));
-    dispatch(logout());
-    window.localStorage.removeItem('token');
+    if(window.confirm('Are you sure you want to logout?')) {
+      dispatch(logout());
+      window.localStorage.removeItem('token');
+    }
   };
 
   return (
