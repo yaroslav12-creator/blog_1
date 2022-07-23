@@ -8,7 +8,7 @@ import { loginValidation, registerValidation, postCreateValidation } from './val
 import { checkAuth, handleValidationErrors } from './utils/index.js';
 import { UserController, PostController } from './controllers/index.js';
 
-mongoose.connect('mongodb+srv://yaroslavshostak:1243325shost@cluster0.pyd4s.mongodb.net/blog_12-07?retryWrites=true&w=majority')
+mongoose.connect('mongodbClusterURl')
     .then(() => console.log('Successfully connected to DB'))
     .catch((err) => console.log('DB connection error:\n', err));
 
